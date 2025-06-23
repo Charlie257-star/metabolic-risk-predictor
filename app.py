@@ -4,6 +4,12 @@ import numpy as np
 import pickle
 
 # Set Streamlit page configuration
+try:
+    import xgboost
+    st.success(f"✅ XGBoost loaded: Version {xgboost.__version__}")
+except Exception as e:
+    st.error(f"❌ XGBoost import failed: {e}")
+
 st.set_page_config(page_title="Metabolic Syndrome Risk Predictor", layout="centered")
 
 # App title and description
