@@ -12,3 +12,6 @@ dependencies = [
     "matplotlib",
     "seaborn"
 ]
+
+[tool.poetry]
+package-mode = false
