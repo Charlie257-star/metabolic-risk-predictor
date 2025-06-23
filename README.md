@@ -7,24 +7,42 @@ A machine learning web app that predicts the risk of **metabolic syndrome** base
 
 ## 🚀 Live Demo
 
-👉 [Try the Streamlit App Here](https://your-app.streamlit.app)
+👉 [Try the Streamlit App Here](https://metabolic-risk-predictor-slpdnc4hwwp3ht9qlweruj.streamlit.app/)
 
 ---
+## 💡 How It Works
 
-## 📊 Tools Used
+1. User enters 5 key health inputs:
+   - Age
+   - Gender
+   - BMI
+   - Blood Glucose (mg/dL)
+   - Triglycerides (mg/dL)
+2. Model processes inputs using a trained `HistGradientBoostingClassifier`
 
-- **Python** (pandas, numpy, matplotlib, seaborn)
-- **Machine Learning**: XGBoost Classifier
-- **Web App**: Streamlit
-- **IDE**: Jupyter Notebook & VS Code
+3. Returns:
+   - A **Low Risk** ✅ or **High Risk** ⚠️ prediction
+   - A risk score percentage (confidence level)
 
+## 🧠 Features
+
+- Trained on a real-world metabolic risk dataset
+- Predicts binary classification (0 = low risk, 1 = high risk)
+- Interactive, browser-based UI
+- Fully open-source and lightweight
+
+## 🔧 Tech Stack
+
+| Tool         | Purpose                              |
+|--------------|---------------------------------------|
+| Streamlit    | Web app front-end                     |
+| scikit-learn | ML model using HistGradientBoosting   |
+| pandas       | Data wrangling                        |
+| numpy        | Numerical operations                  |
+| matplotlib   | Visualizations (EDA)                  |
+| seaborn      | Correlation and distribution plots    |
 ---
 
-## 🔍 Problem Statement
-
-**Metabolic Syndrome** is a group of conditions (like high blood pressure, obesity, and insulin resistance) that increase the risk of heart disease and diabetes. Early risk prediction can help prevent serious health complications.
-
-This project builds a predictive model to assess an individual's risk level based on health metrics, and provides a simple user interface for use by patients or healthcare professionals.
 
 ---
 
@@ -34,14 +52,17 @@ This project builds a predictive model to assess an individual's risk level base
 - Features: Age, BMI, Glucose, Blood Pressure, Triglycerides, Gender, Smoking Status
 
 ---
+## 📦 Installation (Run Locally)
 
-## 🧠 How It Works
+```bash
+# 1. Clone repo
+git clone https://github.com/Charlie257-star/metabolic-risk-predictor
 
-1. Train a model using XGBoost to classify risk
-2. Save the trained model using `pickle`
-3. Build a Streamlit app to take user input and display risk results
-4. Host the app publicly on Streamlit Cloud
+# 2. Install dependencies
+pip install -r requirements.txt
 
+# 3. Run Streamlit app
+streamlit run app.py
 ---
 
 ## 📁 Project Structure
@@ -51,3 +72,5 @@ metabolic-risk-predictor/
 ├── requirements.txt # Dependencies for deployment
 ├── README.md # This file
 ├── notebook.ipynb # Full data analysis and model building
+
+MIT License — free to use, modify, and share.
