@@ -22,7 +22,7 @@ except Exception as e:
 st.header("📋 Enter Your Health Metrics")
 with st.form("input_form"):
     age = st.slider("Age", 18, 90, 35)
-    gender = st.selectbox("Gender", ["Male", "Female"])
+    sex = st.selectbox("Sex", ["Male", "Female"])
     bmi = st.slider("BMI", 15.0, 45.0, 25.0)
     glucose = st.slider("Fasting Glucose (mg/dL)", 60, 200, 90)
     systolic_bp = st.slider("Systolic BP (mm Hg)", 90, 200, 120)
@@ -34,12 +34,12 @@ with st.form("input_form"):
 
 # Process input and predict
 if submitted:
-    gender_encoded = 1 if gender == "Male" else 0
+    sex_encoded = 1 if sex == "Male" else 0
     smoker_encoded = 1 if smoker == "Yes" else 0
 
     input_data = pd.DataFrame({
         "age": [age],
-        "gender": [gender_encoded],
+        "sex": [sex_encoded],
         "bmi": [bmi],
         "glucose": [glucose],
         "systolic_bp": [systolic_bp],
