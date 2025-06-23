@@ -3,69 +3,57 @@ import pandas as pd
 import numpy as np
 import pickle
 
-# Set Streamlit page configuration
-try:
-    import xgboost
-    st.success(f"✅ XGBoost loaded: Version {xgboost.__version__}")
-except Exception as e:
-    st.error(f"❌ XGBoost import failed: {e}")
-
+# Page setup
 st.set_page_config(page_title="Metabolic Syndrome Risk Predictor", layout="centered")
 
-# App title and description
+# App title
 st.title("🧠 Metabolic Syndrome Risk Predictor")
-st.markdown("A machine learning demo that predicts your risk of metabolic syndrome based on key health and lifestyle metrics.")
+st.markdown("A simple app to predict your risk of metabolic syndrome based on health metrics.")
 
-# Load the trained model
+# Load trained model
 try:
-    with open("model.pkl", "rb") as file:
-        model = pickle.load(file)
+    with open("model.pkl", "rb") as f:
+        model = pickle.load(f)
 except Exception as e:
     st.error(f"❌ Failed to load model: {e}")
     st.stop()
 
 # Input form
-st.header("📋 Enter Your Health Metrics")
-with st.form("input_form"):
+st.header("📋 Input Your Health Data")
+with st.form("risk_form"):
     age = st.slider("Age", 18, 90, 35)
-    sex = st.selectbox("Sex", ["Male", "Female"])
-    bmi = st.slider("BMI", 15.0, 45.0, 25.0)
-    glucose = st.slider("Fasting Glucose (mg/dL)", 60, 200, 90)
-    systolic_bp = st.slider("Systolic BP (mm Hg)", 90, 200, 120)
-    diastolic_bp = st.slider("Diastolic BP (mm Hg)", 60, 120, 80)
+    gender = st.selectbox("Gender", ["Male", "Female"])
+    bmi = st.slider("BMI", 15.0, 50.0, 25.0)
+    glucose = st.slider("Blood Glucose (mg/dL)", 60, 200, 90)
     triglycerides = st.slider("Triglycerides (mg/dL)", 50, 400, 150)
-    smoker = st.selectbox("Do you smoke?", ["No", "Yes"])
-
+    
     submitted = st.form_submit_button("🔍 Predict Risk")
 
-# Process input and predict
+# Prediction
 if submitted:
-    sex_encoded = 1 if sex == "Male" else 0
-    smoker_encoded = 1 if smoker == "Yes" else 0
+    gender_encoded = 1 if gender == "Male" else 0
 
-    input_data = pd.DataFrame({
+    input_df = pd.DataFrame({
         "age": [age],
-        "sex": [sex_encoded],
+        "sex": [gender_encoded],
         "bmi": [bmi],
         "glucose": [glucose],
-        "systolic_bp": [systolic_bp],
-        "diastolic_bp": [diastolic_bp],
-        "triglycerides": [triglycerides],
-        "smoker": [smoker_encoded]
+        "triglycerides": [triglycerides]
     })
 
     try:
-        prediction = model.predict(input_data)[0]
-        risk_score = model.predict_proba(input_data)[0][1]
+        prediction = model.predict(input_df)[0]
+        probability = model.predict_proba(input_df)[0][1]
 
-        st.subheader("🧾 Risk Assessment Result")
+        st.subheader("🧾 Risk Prediction Result")
         if prediction == 1:
-            st.error(f"⚠️ High risk of metabolic syndrome.\n\n**Risk Score:** {risk_score:.2%}")
+            st.error(f"⚠️ You are likely at **high risk**.\n\n**Risk Score:** {probability:.2%}")
         else:
-            st.success(f"✅ Low risk of metabolic syndrome.\n\n**Risk Score:** {risk_score:.2%}")
+            st.success(f"✅ You are likely at **low risk**.\n\n**Risk Score:** {probability:.2%}")
     except Exception as e:
         st.error(f"❌ Prediction failed: {e}")
 
+
 # Footer
 st.markdown("---")
-st.caption("Made by Charles Otieno | [GitHub](https://github.com/charlie257)")
+st.caption("Made by Charles Otieno | [GitHub](https://github.com/charlie257-star)")
