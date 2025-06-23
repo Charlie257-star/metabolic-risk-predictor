@@ -1,0 +1,12 @@
+[project]
+name = "metabolic-risk-predictor"
+dependencies = [
+    "streamlit",
+    "pandas",
+    "numpy",
+    "scikit-learn",
+    "xgboost",
+    "matplotlib",
+    "seaborn"
+]
+requires-python = ">=3.9"
